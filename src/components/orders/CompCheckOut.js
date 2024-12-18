@@ -1,20 +1,20 @@
-import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
-import { Context } from '../..';
-import '../../assets/css/orders/orders.css'
-import PortOne from '@portone/browser-sdk/v2';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
+import { Context } from "../..";
+import "../../assets/css/orders/orders.css";
+import PortOne from "@portone/browser-sdk/v2";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CompCheckOut = () => {
   const { host } = useContext(Context);
   const [cartData, setCartData] = useState([]);
   const [memberData, setMemberData] = useState({
-    name: '',
-    address: '',
-    phone: '',
+    name: "",
+    address: "",
+    phone: "",
   });
-  const [deliveryType, setDeliveryType] = useState('member'); // 기본값: 'member'
+  const [deliveryType, setDeliveryType] = useState("member"); // 기본값: 'member'
   const [totalPrice, setTotalPrice] = useState(0); // 상품 합계 금액
   const [shippingFee, setShippingFee] = useState(0); // 배송비
   const [finalPrice, setFinalPrice] = useState(0); // 최종 결제 금액
@@ -25,7 +25,7 @@ const CompCheckOut = () => {
   // 결제 상태
   const [paymentStatus, setPaymentStatus] = useState({
     status: "IDLE",
-  })
+  });
 
   const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ const CompCheckOut = () => {
       return null;
     }
     try {
-      const tokenParts = token.split('.');
+      const tokenParts = token.split(".");
       const payload = JSON.parse(atob(tokenParts[1])); // JWT payload 디코딩
       return payload.sub; // 사용자 ID (sub 필드)
     } catch (error) {
@@ -47,19 +47,19 @@ const CompCheckOut = () => {
   useEffect(() => {
     const fetchCartData = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (!token) {
-          alert('로그인이 필요합니다.');
+          alert("로그인이 필요합니다.");
           return;
         }
 
         const memberId = extractMemberIdFromToken(token); // 사용자 ID 추출
 
         // 1. 장바구니 데이터 가져오기
-        const cartResponse = await axios.get('http://localhost:8080/orders/checkout', {
+        const cartResponse = await axios.get(`${host}/orders/checkout`, {
           headers: {
             Authorization: token,
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
         const cartItems = cartResponse.data;
@@ -80,15 +80,15 @@ const CompCheckOut = () => {
         setFinalPrice(total + shipping);
 
         // 2. 회원 데이터 가져오기
-        const memberResponse = await axios.get(`http://localhost:8080/member/${memberId}`, {
+        const memberResponse = await axios.get(`${host}/member/${memberId}`, {
           headers: {
             Authorization: token,
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
         setMemberData(memberResponse.data);
       } catch (error) {
-        console.error('데이터를 불러오는 중 오류 발생:', error);
+        console.error("데이터를 불러오는 중 오류 발생:", error);
       }
     };
 
@@ -98,27 +98,27 @@ const CompCheckOut = () => {
   const handleDeliveryTypeChange = async (type) => {
     setDeliveryType(type);
 
-    if (type === 'member') {
-      const token = localStorage.getItem('token');
+    if (type === "member") {
+      const token = localStorage.getItem("token");
       if (token) {
         const memberId = extractMemberIdFromToken(token);
         try {
-          const response = await axios.get(`http://localhost:8080/member/${memberId}`, {
+          const response = await axios.get(`${host}/member/${memberId}`, {
             headers: {
               Authorization: token,
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
           });
           setMemberData(response.data);
         } catch (error) {
-          console.error('회원 정보를 가져오는 중 오류 발생:', error);
+          console.error("회원 정보를 가져오는 중 오류 발생:", error);
         }
       }
-    } else if (type === 'custom') {
+    } else if (type === "custom") {
       setMemberData({
-        name: '',
-        address: '',
-        phone: '',
+        name: "",
+        address: "",
+        phone: "",
       });
     }
   };
@@ -127,14 +127,13 @@ const CompCheckOut = () => {
   function randomId() {
     return [...crypto.getRandomValues(new Uint32Array(2))]
       .map((word) => word.toString(16).padStart(8, "0"))
-      .join("")
+      .join("");
   }
 
   const handleClick = async (e) => {
-
-    e.preventDefault()
-    setPaymentStatus({ status: "PENDING" })
-    const paymentId = randomId()
+    e.preventDefault();
+    setPaymentStatus({ status: "PENDING" });
+    const paymentId = randomId();
 
     // 결제창 호출
     const payment = await PortOne.requestPayment({
@@ -143,33 +142,33 @@ const CompCheckOut = () => {
       paymentId,
       orderName: memberData.name,
       totalAmount: 10,
-      currency: 'CURRENCY_KRW',
+      currency: "CURRENCY_KRW",
       payMethod: "EASY_PAY", // 카카오페이는 'EASY_PAY'
       // customData: {
       //   item: item.id,
       // },
-      customer: { // customer은 KG이니시스 일반 결제시 필요한 정보
+      customer: {
+        // customer은 KG이니시스 일반 결제시 필요한 정보
         fullName: memberData.name,
         email: memberData.email,
-        phoneNumber: memberData.phone
+        phoneNumber: memberData.phone,
       },
-
-    })
+    });
 
     if (payment.code !== undefined) {
       setPaymentStatus({
         status: "FAILED",
         message: payment.message,
-      })
-      return
+      });
+      return;
     }
 
     // 가맹점 결제 요청 (서버)
-    const completeResponse = await fetch("http://localhost:8080/orders/register", {
+    const completeResponse = await fetch(`${host}/orders/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: authToken
+        Authorization: authToken,
       },
       body: JSON.stringify({
         orders: {
@@ -177,26 +176,26 @@ const CompCheckOut = () => {
           odAddress: memberData.address,
           odName: memberData.name,
           odPhone: memberData.phone,
-          payMethod: '카카오페이'
+          payMethod: "카카오페이",
         }, //주문정보
         paymentId: payment.paymentId, // 결제번호
       }),
-    })
+    });
     // 결제 결과
     if (completeResponse.status === 201) {
-      const odNo = await completeResponse.json()
+      const odNo = await completeResponse.json();
       setPaymentStatus({
-        status: 'Completed',
-      })
+        status: "Completed",
+      });
       navigate(`/orders/complete/${odNo}`);
     } else {
       setPaymentStatus({
         status: "FAILED",
         message: await completeResponse.text(),
-      })
-      alert('결제에 실패했습니다..');
+      });
+      alert("결제에 실패했습니다..");
     }
-  }
+  };
 
   return (
     <main className="register-container">
@@ -221,7 +220,7 @@ const CompCheckOut = () => {
                 <tr key={index}>
                   <td>{item.pdName}</td>
                   <td>{item.ctCount}</td>
-                  <td>{item.option === null ? '-' : item.option}</td>
+                  <td>{item.option === null ? "-" : item.option}</td>
                   <td>{(item.pdPrice * item.ctCount).toLocaleString()}원</td>
                 </tr>
               ))}
@@ -237,9 +236,9 @@ const CompCheckOut = () => {
                 type="radio"
                 name="delivery-type"
                 value="member"
-                checked={deliveryType === 'member'}
-                onChange={() => handleDeliveryTypeChange('member')}
-              />{' '}
+                checked={deliveryType === "member"}
+                onChange={() => handleDeliveryTypeChange("member")}
+              />{" "}
               회원 정보와 동일
             </label>
             <label>
@@ -247,9 +246,9 @@ const CompCheckOut = () => {
                 type="radio"
                 name="delivery-type"
                 value="custom"
-                checked={deliveryType === 'custom'}
-                onChange={() => handleDeliveryTypeChange('custom')}
-              />{' '}
+                checked={deliveryType === "custom"}
+                onChange={() => handleDeliveryTypeChange("custom")}
+              />{" "}
               직접 입력
             </label>
           </div>
@@ -263,7 +262,7 @@ const CompCheckOut = () => {
               onChange={(e) =>
                 setMemberData({ ...memberData, name: e.target.value })
               }
-              readOnly={deliveryType === 'member'}
+              readOnly={deliveryType === "member"}
             />
           </div>
           <div className="form-group">
@@ -276,7 +275,7 @@ const CompCheckOut = () => {
               onChange={(e) =>
                 setMemberData({ ...memberData, address: e.target.value })
               }
-              readOnly={deliveryType === 'member'}
+              readOnly={deliveryType === "member"}
             />
           </div>
           <div className="form-group">
@@ -289,12 +288,16 @@ const CompCheckOut = () => {
               onChange={(e) =>
                 setMemberData({ ...memberData, phone: e.target.value })
               }
-              readOnly={deliveryType === 'member'}
+              readOnly={deliveryType === "member"}
             />
           </div>
           <div className="form-group">
             <label htmlFor="delivery-note">남기실 말씀</label>
-            <input type="text" id="delivery-note" placeholder="요청사항을 입력하세요" />
+            <input
+              type="text"
+              id="delivery-note"
+              placeholder="요청사항을 입력하세요"
+            />
           </div>
         </div>
         <div className="section">

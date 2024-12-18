@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useSelector } from "react-redux";
+import { Context } from "../../index";
 import axios from "axios";
 import "../../assets/css/mypage/MyOrder.css";
 
 const MyOrder = () => {
-
   const [orders, setOrders] = useState([]);
+  const { host } = useContext(Context);
   const authToken = useSelector((state) => state.member.authToken);
-  
+
   const getRandomDeliveryStatus = () => {
     const statuses = ["상품준비중", "배송중", "배송완료"];
     return statuses[Math.floor(Math.random() * statuses.length)];
@@ -21,34 +22,34 @@ const MyOrder = () => {
           return;
         }
 
-        const response = await axios.get("http://localhost:8080/orders/myList", {
+        const response = await axios.get(`${host}/orders/myList`, {
           headers: {
             Authorization: authToken,
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
 
-        const updatedOrders = response.data.map(order => ({
+        const updatedOrders = response.data.map((order) => ({
           ...order,
-          deliveryStatus: getRandomDeliveryStatus()
+          deliveryStatus: getRandomDeliveryStatus(),
         }));
         setOrders(updatedOrders);
       } catch (error) {
         console.error("주문 내역을 불러오는 중 오류 발생:", error);
       }
     };
-    
+
     fetchOrders();
   }, [authToken]);
-  
+
   const formatRegDate = (regDate) => {
     if (!regDate) return "N/A";
     const date = new Date(regDate);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
 
@@ -73,7 +74,7 @@ const MyOrder = () => {
               </tr>
             </thead>
             <tbody>
-            {orders.map((order, index) => (
+              {orders.map((order, index) => (
                 <tr key={index}>
                   <td>{order.odNo}</td>
                   <td>{order.id}</td>
@@ -83,8 +84,9 @@ const MyOrder = () => {
                   <td>{order.odPhone}</td>
                   <td>{formatRegDate(order.regDate)}</td>
                   <td>{order.payMethod}</td>
-                  <td>{order.deliveryStatus}
-                  <div className="button-container">
+                  <td>
+                    {order.deliveryStatus}
+                    <div className="button-container">
                       {order.deliveryStatus === "상품준비중" && (
                         <button className="cancel-btn">주문취소</button>
                       )}
@@ -96,7 +98,7 @@ const MyOrder = () => {
                       )}
                       <button className="track-btn">배송조회</button>
                     </div>
-                    </td>
+                  </td>
                 </tr>
               ))}
             </tbody>

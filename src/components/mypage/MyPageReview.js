@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from "react";
 import "../../assets/css/mypage/MyPageReview.css";
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../../index";
 
 const MyPageReview = () => {
-
   const [reviews, setReviews] = useState([]); // 리뷰 데이터를 저장
   const [error, setError] = useState(null); // 에러 메시지 저장
-  const { isLogged, userId } = useSelector((state) => state.member);  // Redux에서 로그인 정보 가져오기
+  const { isLogged, userId } = useSelector((state) => state.member); // Redux에서 로그인 정보 가져오기
   const [filteredReviews, setFilteredReviews] = useState([]);
+  const { host } = useContext(Context);
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const itemsPerPage = 10;
@@ -21,26 +22,28 @@ const MyPageReview = () => {
         navigate("/login");
         return;
       }
-    
+
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get("http://localhost:8080/review/myList", {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`${host}/review/myList`, {
           headers: {
             Authorization: token,
           },
         });
-    
+
         const reviews = response.data;
-    
+
         // createdAt 필드를 ISO 형식으로 변환
         const formattedReviews = reviews.map((review) => ({
           ...review,
-          createdAt: review.createdAt ? review.createdAt.replace(" ", "T") : null,
+          createdAt: review.createdAt
+            ? review.createdAt.replace(" ", "T")
+            : null,
         }));
-    
+
         // 리뷰 데이터를 역순으로 정렬
         formattedReviews.sort((a, b) => b.reNo - a.reNo);
-    
+
         setReviews(formattedReviews);
       } catch (error) {
         console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
@@ -50,7 +53,6 @@ const MyPageReview = () => {
 
     fetchReviews();
   }, [isLogged, navigate]);
-
 
   useEffect(() => {
     setFilteredReviews(reviews);
@@ -62,7 +64,6 @@ const MyPageReview = () => {
     (page - 1) * itemsPerPage,
     page * itemsPerPage
   );
-
 
   const handlePageChange = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
@@ -91,29 +92,32 @@ const MyPageReview = () => {
     return <div className="error-message">{error}</div>;
   }
 
-
   return (
     <main className="review-container">
       <div className="review-box">
         <h5>내 리뷰</h5>
       </div>
 
-      <table className='review-list'>
-        <thead className='review-list-head'>
+      <table className="review-list">
+        <thead className="review-list-head">
           <tr>
-            <th className='col-1'>No</th>
-            <th className='col-2'>게시글 제목</th>
-            <th className='col-3'>작성일</th>
+            <th className="col-1">No</th>
+            <th className="col-2">게시글 제목</th>
+            <th className="col-3">작성일</th>
           </tr>
         </thead>
 
-        <tbody className='review-list-body'>
+        <tbody className="review-list-body">
           {paginatedReviews.length > 0 ? (
             paginatedReviews.map((review, index) => (
               <tr key={review.reNo}>
-                <td className="item-col-1">{(page - 1) * itemsPerPage + index + 1}</td>
+                <td className="item-col-1">
+                  {(page - 1) * itemsPerPage + index + 1}
+                </td>
                 <td className="item-col-2">{review.content}</td>
-                <td className="item-col-3">{new Date(review.createdAt).toLocaleDateString()}</td>
+                <td className="item-col-3">
+                  {new Date(review.createdAt).toLocaleDateString()}
+                </td>
               </tr>
             ))
           ) : (
@@ -154,7 +158,6 @@ const MyPageReview = () => {
           다음
         </button>
       </div>
-
     </main>
   );
 };

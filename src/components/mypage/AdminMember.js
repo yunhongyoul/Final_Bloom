@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { Context } from "../../index";
 import "../../assets/css/mypage/AdminMember.css";
 
 const AdminMember = () => {
   const [memberList, setMemberList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeRole, setActiveRole] = useState("ROLE_USER");
+  const { host } = useContext(Context);
   const authToken = useSelector((state) => state.member.authToken);
 
   useEffect(() => {
     // 회원 정보 API 호출
     const fetchMemberData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/member/list", {
+        const response = await axios.get(`${host}/member/list`, {
           headers: {
             Authorization: authToken,
             "Content-Type": "application/json",
