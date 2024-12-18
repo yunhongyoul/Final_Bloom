@@ -1,0 +1,79 @@
+/* 공통 스타일 */
+.title-box {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.content h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.role-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.role-buttons button {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background-color: #f1f1f1;
+  /* 기본 배경 색상 */
+  color: black;
+  /* 기본 글자 색상 */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.role-buttons button.active {
+  background-color: #ff4081;
+  color: white;
+  border-color: #ff4081;
+}
+
+.member-role-section {
+  margin-bottom: 2rem;
+}
+
+.member-role-section h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.member-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.member-table th,
+.member-table td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.member-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.member-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.member-table tr:hover {
+  background-color: #e9ecef;
+}

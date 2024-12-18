@@ -1,0 +1,274 @@
+.review-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.review-summary .ratings {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.review-summary .rating {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.review {
+  margin-top: 31px;
+  padding: 12px 20px;
+}
+
+.review h2 {
+  width: 100%;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1.5px solid #333;
+}
+
+/* 리뷰 작성 버튼 */
+.review-btn {
+  padding: 10px 20px;
+  background-color: #ddd;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.review-btn:hover {
+  background-color: #ccc;
+}
+
+/* 리뷰 작성 폼 스타일 */
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.review-form textarea {
+  width: 100%;
+  height: 120px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  resize: none;
+}
+
+.review-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px auto;
+}
+
+.review-form textarea {
+  width: 100%;
+  padding: 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 16px;
+  resize: vertical;
+}
+
+.review-reg-btn {
+  padding: 10px 16px;
+  margin-top: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.review-reg-btn2 {
+  background-color: #333;
+  color: #fff;
+}
+
+.review-reg-btn:hover {
+  background-color: #ff4081;
+}
+
+.review-list {
+  width: 1000px;
+  min-width: 800px;
+  padding: 10px;
+  margin-top: 50px;
+}
+
+/* 리뷰 항목 전체 스타일 */
+.review-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* 상단 영역: 내용과 메타 정보 */
+.review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-bottom {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+/* 내용과 메타 정보 스타일 */
+.review-content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-content {
+  font-size: 16px;
+  margin: 0;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #666;
+}
+
+/* 버튼 컨테이너 스타일 */
+.review-buttons-wrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.delete-btn {
+  padding: 5px 10px;
+  background-color: #ff4081;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.review-item-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.review-item-content p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* 메타 정보 스타일 (아이디와 날짜) */
+.review-meta {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.review-item .review-content {
+  flex: 1;
+}
+
+.review-edit-btn,
+.review-delete-btn {
+  width: 80px;
+  padding: 5px;
+  background-color: #ddd;
+  margin-bottom: 10px;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.review-save-btn,
+.review-cancel-btn {
+  width: 80px;
+  margin-top: 20px;
+  padding: 5px;
+  background-color: #ddd;
+  margin-bottom: 10px;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.review-edit-btn:hover,
+.review-delete-btn:hover {
+  background-color: #ff4081;
+}
+
+.review-save-btn:hover,
+.review-cancel-btn:hover {
+  background-color: #ff4081;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination-btn {
+  padding: 10px 12px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.pagination-btn.active {
+  color: #ff4081;
+  font-weight: bold;
+}
+
+.pagination button.active:hover {
+  color: #fff;
+}
+
+.edit-review-area {
+  width: 100%;
+  padding: 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  resize: vertical;
+}
+
+.review-id, .review-date {
+  margin-right: 20px;
+  font-weight: 100;
+  font-size: 14px;
+}

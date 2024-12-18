@@ -1,0 +1,145 @@
+.main-cart {
+  max-width: 1440px;
+  margin: 0 auto;
+  margin-top: 150px;
+}
+
+.cart-title-box {
+  max-width: 1440px;
+  margin: 20px auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cart-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cart-header {
+  font-size: 14px;
+  color: #ff4081;
+  margin-bottom: 20px;
+}
+
+.cart-header p {
+  margin: 0;
+}
+
+.cart-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.cart-table {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 15px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.cart-thumbnail img {
+  border-radius: 8px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.cart-info h4 {
+  font-size: 1.2em;
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.cart-modify-btn {
+  width: 100px;
+  margin-right: 10px;
+  background-color: #333;
+  color: #fff;
+}
+
+.cart-actions .cart-delete-btn {
+  width: 80px;
+  padding: 10px 20px;
+  background: #ddd;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.cart-actions .cart-delete-btn:hover {
+  background: #d2111b;
+  color: #fff;
+}
+
+.checkout-actions {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin: 20px auto;
+  max-width: 800px;
+  padding: 10px 20px;
+}
+
+.checkout-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.continue-btn {
+  width: 160px;
+  background-color: #fff;
+  color: #ff4081;
+  border: 2px solid #ff4081;
+}
+
+.continue-btn:hover {
+  background-color: #ff4081;
+  color: #fff;
+  border-color: #ff4081;
+}
+
+.order-btn {
+  width: 160px;
+  background-color: #fff;
+  color: #ff4081;
+  border: 2px solid #ff4081;
+}
+
+.order-btn:hover {
+  background-color: #ff4081;
+  color: #fff;
+  border-color: #ff4081;
+}

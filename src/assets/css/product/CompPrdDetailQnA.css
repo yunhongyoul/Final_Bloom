@@ -1,0 +1,127 @@
+.qna-section {
+  margin-top: 20px;
+}
+
+.qna-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.qna-header button {
+  padding: 5px 10px;
+  background-color: #ff4081;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.qna-list {
+  padding: 10px;
+  margin-top: 50px;
+}
+
+.qna-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.qna-item-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* 콘텐츠와 버튼 사이를 벌림 */
+}
+
+.qna-item:last-child {
+  border-bottom: none;
+}
+
+.qna-input-button {
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  margin: 20px 0; /* 위아래 여백 */
+}
+
+.qna-input-button button {
+  padding: 10px 15px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.qna-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px auto;
+}
+
+.qna-reg-btn {
+  background-color: #333;
+  color: #fff;
+  font-weight: bold;
+  padding: 11px 16px;
+}
+
+.qna-input textarea {
+  width: 100%;
+  padding: 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 16px;
+  resize: vertical; /* 크기 조절 비활성화 */
+}
+
+.qna-mod-area-box {
+  width: 100%;
+}
+
+.qna-actions {
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  gap: 10px; /* 버튼 간격 */
+}
+
+.qna-mod-area {
+  width: 100%;
+  padding: 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 16px;
+  resize: vertical; /* 크기 조절 비활성화 */
+}
+
+.qna-mod-btn {
+  width: 80px;
+  padding: 5px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.qna-input button {
+  align-self: flex-end;
+  padding: 10px 12px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.qna-meta-btn {
+  width: 80px;
+  padding: 5px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+small {
+  margin-right: 20px;
+}

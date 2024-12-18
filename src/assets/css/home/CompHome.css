@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.section-1 {
+  width: 100%;
+  height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.swiper-slide {
+  overflow: hidden;
+}
+
+.swiper-slide img {
+  object-fit: contain;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-div {
+  position: absolute;
+  top: 40%;
+  left: 17%;
+  z-index: 2;
+}
+
+.swiper-div p:nth-child(1){
+  font-size: 52px;
+  font-weight: bold;
+}
+
+.swiper-div p:nth-child(2){
+  margin-top: 10px;
+  font-size: 24px;
+}
+
+/* Bloom's Story 섹션 */
+.section-2 {
+  width: 100%;
+  height: 959px;
+  background: url(/src/assets/img/home/back1.jpg) no-repeat center/100% 100%;
+  position: relative;
+}
+
+.section-2 > img:nth-child(1) {
+  width: 30%;
+  height: 60%;
+  position: absolute;
+  object-fit: cover;
+  top: 13%;
+  left: 10%;
+  z-index: 2;
+}
+
+.section-2 > img:nth-child(2) {
+  width: 50%;
+  height: 55%;
+  position: absolute;
+  object-fit: cover;
+  bottom: 7%;
+  right: 7%;
+}
+
+.section-2 > h1 {
+  position: absolute;
+  top: 20%;
+  left: 43%;
+  font-size: 75px;
+  font-family: 'Times New Roman', Times, serif;
+  color: #8f8f8f;
+}
+
+.section-2 > h1::after {
+  content: "";
+  position: absolute;
+  left: -100px;
+  display: block;
+  width: 150%;
+  height: 4px;
+  background-color: #ebebeb;
+  z-index: 1;
+}
+
+.section-2 > p {
+  position: absolute;
+  top: 31%;
+  left: 55%;
+  font-size: 30px;
+}

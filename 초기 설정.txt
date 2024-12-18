@@ -1,0 +1,2 @@
+터미널 다운로드 스토어
+npm install module @reduxjs/toolkit axios react-bootstrap react-dom react-redux react-router-dom react-router-dom react-router-dom font-awesome redux-persist
