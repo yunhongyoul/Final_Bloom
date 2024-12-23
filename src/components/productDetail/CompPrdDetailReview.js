@@ -190,10 +190,23 @@ const CompPrdDetailReview = () => {
 
   // 리뷰가 없을 때 메시지 표시
   if (reviews.length === 0) {
-    return <p>
-      리뷰가 없습니다. 첫 번째 리뷰를 작성해보세요!
-      <button onClick={handleAddReview} className="review-reg-btn2"> 리뷰 등록 </button>
-    </p>;
+    return <div>
+    <p> 리뷰가 없습니다. 첫 번째 리뷰를 작성해보세요! </p>
+    {isReviewing && (
+      <div className="review-form">
+        <textarea
+          placeholder="리뷰를 작성해주세요."
+          value={reviewContent}
+          onChange={(e) => setReviewContent(e.target.value)}
+        ></textarea>
+        <div className="review-buttons">
+          <button onClick={handleAddReview} className="review-reg-btn2">
+            등록
+          </button>
+        </div>
+      </div>
+    )}
+    </div>;
   }
 
   // 리뷰 데이터를 렌더링
