@@ -198,6 +198,20 @@ const CompPrdDetailReview = () => {
       >
         {isReviewing ? "작성 취소" : "리뷰 작성"}
       </button>
+      {isReviewing && (
+        <div className="review-form">
+          <textarea
+            placeholder="리뷰를 작성해주세요."
+            value={reviewContent}
+            onChange={(e) => setReviewContent(e.target.value)}
+          ></textarea>
+          <div className="review-buttons">
+            <button onClick={handleAddReview} className="review-reg-btn2">
+              등록
+            </button>
+          </div>
+        </div>
+      )}
     </div>;
   }
 
