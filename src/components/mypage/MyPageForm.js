@@ -34,7 +34,7 @@ const MyPageForm = () => {
         </div>
 
         <div className="right-column">
-          <Link to={isLogged ? "/orders/myList" : "/long"}>
+          <Link to="/orders/myList">
             <img src={memberorder} alt="memberorder" className="memberorder" />
             <div className="mypage-text-box">구매 내역</div>
           </Link>
@@ -94,6 +94,26 @@ const MyPageForm = () => {
       </div>
     </>
   );
+
+  const renderGuestLinks = () => (
+    <>
+      <div className="line-block">
+        <div className="full-line">
+          <Link to="/login">
+            <div className="mypage-text-box">로그인 하러 가기</div>
+          </Link>
+        </div>
+      </div>
+
+      <div className="line-block">
+        <div className="full-line">
+          <Link to="/register">
+            <div className="mypage-text-box">회원 가입</div>
+          </Link>
+        </div>
+      </div>
+    </>
+  );
   
   return (
     <div className="mypage-container">
@@ -114,7 +134,11 @@ const MyPageForm = () => {
             </div>
           </div>
         </div>
-        {role === 'ROLE_USER' ? renderUserLinks() : renderAdminLinks()}
+        {role === 'ROLE_USER'
+          ? renderUserLinks()
+          : role === 'ROLE_ADMIN'
+          ? renderAdminLinks()
+          : renderGuestLinks()}
       </form>
 
       <div className="button-container">
