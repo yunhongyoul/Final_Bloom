@@ -117,21 +117,20 @@ const CompPrdDetailReview = () => {
         return;
       }
 
-      const response = await axios.delete(`${host}/review/remove?no=${reNo}`, {
+      const response = await axios.delete(`${host}/review/remove${reNo}`, {
         headers: {
           Authorization: token,
         },
       });
 
-      if (response.status === 204) {
+      if (response.status === 200) {
         alert("리뷰가 삭제되었습니다.");
-        setReviews((prevReviews) =>
-          prevReviews.filter((review) => review.reNo !== reNo)
-        );
+        setReviews(reviews.filter((review) => review.reNo !== reNo));
       } else {
         alert("리뷰 삭제에 실패했습니다.");
       }
     } catch (error) {
+      console.error("리뷰 삭제 중 오류 발생:", error);
       alert("리뷰 삭제 중 오류가 발생했습니다.");
     }
   };
