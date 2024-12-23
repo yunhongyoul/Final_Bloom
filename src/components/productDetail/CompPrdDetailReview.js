@@ -110,6 +110,9 @@ const CompPrdDetailReview = () => {
 
   // 리뷰 삭제
   const handleDeleteReview = async (reNo) => {
+
+    const { userId } = useSelector((state) => state.member);
+
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -117,13 +120,21 @@ const CompPrdDetailReview = () => {
         return;
       }
 
-      const response = await axios.delete(`${host}/review/remove${reNo}`, {
+       // 리뷰 작성자가 로그인한 사용자와 일치하는지 확인
+      const review = reviews.find((review) => review.reNo === reNo);
+      if (review.id !== userId) {
+        alert("삭제 권한이 없습니다.");
+        return;
+      }
+
+      const response = await axios.delete(`${host}/review/remove?no=${reNo}`, {
         headers: {
           Authorization: token,
+          "Content-Type": "application/json",
         },
       });
 
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 204) {
         alert("리뷰가 삭제되었습니다.");
         setReviews(reviews.filter((review) => review.reNo !== reNo));
       } else {
