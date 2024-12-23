@@ -24,34 +24,6 @@ const CompRegisterAdmin = () => {
     setAdmin((prev) => ({ ...prev, [name]: value }));
   };
 
-
-  const idCheck = async () => {
-    if (!admin.id) {
-      alert("아이디를 입력해주세요.");
-      return;
-    }
-  
-    try {
-      const response = await axios.post(`${host}/check-id`, { id: admin.id });
-      if (response.data) {
-        alert("사용 가능한 아이디입니다.");
-      } else {
-        alert("이미 사용 중인 아이디입니다.");
-      }
-    } catch (error) {
-      console.error("아이디 중복 확인 에러:", error);
-      alert("중복 확인 중 문제가 발생했습니다.");
-    }
-  };
-
-  const DomainChange = (e) => {
-    const { value } = e.target;
-  
-    setAdmin((prev) => ({
-      ...prev,
-      emailDomain: value,
-    }));
-  };
   
   
   const handleSubmit = async (e) => {
@@ -90,7 +62,6 @@ const CompRegisterAdmin = () => {
             onChange={handleChange}
             required
           />
-          <button type="button" className="check-btn" onClick={idCheck}>중복확인</button>
         </div>
       </div>
 
