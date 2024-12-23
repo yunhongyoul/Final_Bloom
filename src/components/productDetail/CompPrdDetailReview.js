@@ -192,20 +192,12 @@ const CompPrdDetailReview = () => {
   if (reviews.length === 0) {
     return <div>
     <p> 리뷰가 없습니다. 첫 번째 리뷰를 작성해보세요! </p>
-    {isReviewing && (
-      <div className="review-form">
-        <textarea
-          placeholder="리뷰를 작성해주세요."
-          value={reviewContent}
-          onChange={(e) => setReviewContent(e.target.value)}
-        ></textarea>
-        <div className="review-buttons">
-          <button onClick={handleAddReview} className="review-reg-btn2">
-            등록
-          </button>
-        </div>
-      </div>
-    )}
+    <button
+        onClick={() => setIsReviewing((prev) => !prev)}
+        className="review-reg-btn"
+      >
+        {isReviewing ? "작성 취소" : "리뷰 작성"}
+      </button>
     </div>;
   }
 
