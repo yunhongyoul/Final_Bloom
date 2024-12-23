@@ -190,7 +190,10 @@ const CompPrdDetailReview = () => {
 
   // 리뷰가 없을 때 메시지 표시
   if (reviews.length === 0) {
-    return <p>리뷰가 없습니다. 첫 번째 리뷰를 작성해보세요!</p>;
+    return <p>
+      리뷰가 없습니다. 첫 번째 리뷰를 작성해보세요!
+      <button onClick={handleAddReview} className="review-reg-btn2"> 리뷰 등록 </button>
+    </p>;
   }
 
   // 리뷰 데이터를 렌더링
