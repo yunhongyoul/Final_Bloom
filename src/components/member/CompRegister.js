@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import "../../assets/css/member/CompRegister.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { Context } from "../..";
+import "../../assets/css/member/CompRegister.css";
 
 const CompRegister = () => {
   const authToken = useSelector((state) => state.member.authToken);

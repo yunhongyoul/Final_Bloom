@@ -1,5 +1,4 @@
 import React, {useState, useContext} from 'react';
-import "../../assets/css/mypage/MyPageRead.css";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
@@ -7,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Context } from '../..';
 import "../member/CompRegister";
 import { useSelector } from 'react-redux'; 
+import "../../assets/css/mypage/MyPageRead.css";
 
 const MyPageRead = () => {
 

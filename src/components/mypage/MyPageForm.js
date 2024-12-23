@@ -139,11 +139,11 @@ const MyPageForm = () => {
           : role === 'ROLE_ADMIN'
           ? renderAdminLinks()
           : renderGuestLinks()}
-      </form>
 
       <div className="button-container">
         <button className="home-button" onClick={handleHomeClick}>홈으로</button>
       </div>
+      </form>
     </div>
   );
 };
