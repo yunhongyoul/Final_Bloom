@@ -109,9 +109,7 @@ const CompPrdDetailReview = () => {
   };
 
   // 리뷰 삭제
-  const handleDeleteReview = async (reNo) => {
-
-    const { userId } = useSelector((state) => state.member);
+  const handleDeleteReview = async (reNo, userId) => {
 
     try {
       const token = localStorage.getItem("token");
@@ -308,7 +306,7 @@ const CompPrdDetailReview = () => {
                       수정
                     </button>
                     <button
-                      onClick={() => handleDeleteReview(review.reNo)}
+                      onClick={() => handleDeleteReview(review.reNo, userId)}
                       className="review-delete-btn"
                     >
                       삭제
