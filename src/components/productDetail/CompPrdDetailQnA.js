@@ -14,6 +14,18 @@ const CompPrdDetailQnA = ({ pdNo }) => {
 
   const userId = useSelector((state) => state.member.userId);
 
+  // 날짜 포맷 함수
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+    const dd = String(date.getDate()).padStart(2, '0');
+    const hh = String(date.getHours()).padStart(2, '0');
+    const mi = String(date.getMinutes()).padStart(2, '0');
+    const ss = String(date.getSeconds()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+  };
+
   useEffect(() => {
     const savedQnaList = localStorage.getItem("qnaList");
     if (savedQnaList) {
@@ -178,7 +190,7 @@ const CompPrdDetailQnA = ({ pdNo }) => {
                           <div className="qna-meta-actions">
                             <div className="qna-meta">
                               <small>{qna.userId}</small>
-                              <small>{qna.date}</small>
+                              <small>{formatDate(qna.date)}</small>
                             </div>
                             {qna.userId === userId && (
                               <div className="qna-actions">
