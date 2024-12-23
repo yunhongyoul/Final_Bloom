@@ -123,7 +123,7 @@ const CompPrdDetailReview = () => {
         },
       });
 
-      if (response.status === 200) {
+      if (response.status === 204) {
         alert("리뷰가 삭제되었습니다.");
         setReviews((prevReviews) =>
           prevReviews.filter((review) => review.reNo !== reNo)
