@@ -24,27 +24,33 @@ const MyPageReview = () => {
       }
 
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         const response = await axios.get(`${host}/review/myList`, {
           headers: {
             Authorization: token,
           },
         });
-
-        if (response.status === 200) {
-          setReviews(response.data.reverse()); // 역정렬된 리뷰 데이터 저장
-        } else {
-          console.error("리뷰 데이터를 가져오는데 실패했습니다.");
-        }
+    
+        const reviews = response.data;
+    
+        // createdAt 필드를 ISO 형식으로 변환
+        const formattedReviews = reviews.map((review) => ({
+          ...review,
+          createdAt: review.createdAt ? review.createdAt.replace(" ", "T") : null,
+        }));
+    
+        // 리뷰 데이터를 역순으로 정렬
+        formattedReviews.sort((a, b) => b.reNo - a.reNo);
+    
+        setReviews(formattedReviews);
       } catch (error) {
-        console.error("리뷰 데이터를 가져오는 중 오류 발생:", error);
-      } finally {
-        setLoading(false); 
+        console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
+        setError("리뷰 데이터를 가져오는 중 문제가 발생했습니다.");
       }
     };
 
     fetchReviews();
-  }, [isLogged, navigate, host]);
+  }, [isLogged, navigate]);
 
   useEffect(() => {
     setFilteredReviews(reviews);

@@ -19,6 +19,15 @@ const CompRegisterAdmin = () => {
     role: "ROLE_ADMIN",
   });
 
+  const DomainChange = (e) => {
+    const { value } = e.target;
+
+    setMember((prev) => ({
+      ...prev,
+      emailDomain: value,
+    }));
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setAdmin((prev) => ({ ...prev, [name]: value }));
