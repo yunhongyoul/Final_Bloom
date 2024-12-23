@@ -56,7 +56,7 @@ const CompRegisterAdmin = () => {
   return (
     <main className="register-container">
     <div className="join-box">
-      <h5>회원가입</h5>
+      <h5>관리자_회원가입</h5>
     </div>
     <form onSubmit={handleSubmit} className="form-section">
       <div className="form-box">
