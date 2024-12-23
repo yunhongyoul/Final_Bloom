@@ -200,7 +200,13 @@ const CompPrdDetail = () => {
             <button
               className="buy-button add-to-cart"
               onClick={() => {
-                navigate(`/orders/singleitem/${product.pdNo}/${quantity}/${selectedOption}`);
+                if (!selectedOption) {
+                  alert("옵션을 선택해주세요.");
+                  return;
+                }
+                navigate(
+                  `/orders/singleitem/${product.pdNo}/${quantity}/${selectedOption}`
+                );
               }}
             >
               단건구매

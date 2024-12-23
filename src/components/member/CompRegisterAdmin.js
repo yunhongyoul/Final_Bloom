@@ -19,20 +19,19 @@ const CompRegisterAdmin = () => {
     role: "ROLE_ADMIN",
   });
 
-  const DomainChange = (e) => {
-    const { value } = e.target;
-
-    setMember((prev) => ({
-      ...prev,
-      emailDomain: value,
-    }));
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setAdmin((prev) => ({ ...prev, [name]: value }));
   };
 
+  const DomainChange = (e) => {
+    const { value } = e.target;
+  
+    setAdmin((prev) => ({
+      ...prev,
+      emailDomain: value,
+    }));
+  };
   
   
   const handleSubmit = async (e) => {
