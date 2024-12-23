@@ -75,7 +75,7 @@ const CompCheckOut2 = () => {
         setShippingFee(shipping);
 
         // 최종 결제 금액 계산
-        setFinalPrice(totalPrice + shipping);
+        setFinalPrice(product.price + shipping);
 
         // 2. 회원 데이터 가져오기
         const memberResponse = await axios.get(`${host}/member/${memberId}`, {
