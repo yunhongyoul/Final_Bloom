@@ -32,26 +32,14 @@ const MyPageReview = () => {
         });
 
         if (response.status === 200) {
-          const fetchedReviews = response.data;
-
-          // 리뷰 데이터 정렬 및 날짜 형식 변경
-          const formattedReviews = fetchedReviews.map((review) => ({
-            ...review,
-            createdAt: review.createdAt
-              ? new Date(review.createdAt.replace(" ", "T")).toLocaleDateString()
-              : "알 수 없음",
-          }));
-
-          formattedReviews.sort((a, b) => b.reNo - a.reNo); // 최신순 정렬
-          setReviews(formattedReviews);
+          setReviews(response.data.reverse()); // 역정렬된 리뷰 데이터 저장
         } else {
-          setError("리뷰 데이터를 불러오지 못했습니다.");
+          console.error("리뷰 데이터를 가져오는데 실패했습니다.");
         }
       } catch (error) {
-        console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
-        setError("리뷰 데이터를 가져오는 중 문제가 발생했습니다.");
+        console.error("리뷰 데이터를 가져오는 중 오류 발생:", error);
       } finally {
-        setLoading(false);
+        setLoading(false); 
       }
     };
 
@@ -119,7 +107,10 @@ const MyPageReview = () => {
                   {(page - 1) * itemsPerPage + index + 1}
                 </td>
                 <td className="item-col-2">{review.content}</td>
-                <td className="item-col-3">{review.createdAt}</td>
+                <td className="item-col-3">
+                {new Date(review.regDate).toLocaleDateString()}
+
+                </td>
               </tr>
             ))
           ) : (
