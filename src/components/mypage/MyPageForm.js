@@ -1,8 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import '../../assets/css/mypage/MyPageform.css';
 import flower from '../../assets/img/home/꽃1.png';
 import memberinfo from '../../assets/img/home/member-info.png';
@@ -36,7 +34,7 @@ const MyPageForm = () => {
         </div>
 
         <div className="right-column">
-          <Link to="/orders/myList">
+          <Link to={isLogged ? "/orders/myList" : "/long"}>
             <img src={memberorder} alt="memberorder" className="memberorder" />
             <div className="mypage-text-box">구매 내역</div>
           </Link>
