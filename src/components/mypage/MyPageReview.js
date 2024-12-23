@@ -8,7 +8,7 @@ import { Context } from "../../index";
 const MyPageReview = () => {
   const [reviews, setReviews] = useState([]); // 리뷰 데이터를 저장
   const [error, setError] = useState(null); // 에러 메시지 저장
-  const { isLogged, userId } = useSelector((state) => state.member); // Redux에서 로그인 정보 가져오기
+  const { isLogged, userId } = useSelector((state) => state.member); 
   const [filteredReviews, setFilteredReviews] = useState([]);
   const { host } = useContext(Context);
   const navigate = useNavigate();
@@ -31,28 +31,32 @@ const MyPageReview = () => {
           },
         });
 
-        const reviews = response.data;
+        if (response.status === 200) {
+          const fetchedReviews = response.data;
 
-        // createdAt 필드를 ISO 형식으로 변환
-        const formattedReviews = reviews.map((review) => ({
-          ...review,
-          createdAt: review.createdAt
-            ? review.createdAt.replace(" ", "T")
-            : null,
-        }));
+          // 리뷰 데이터 정렬 및 날짜 형식 변경
+          const formattedReviews = fetchedReviews.map((review) => ({
+            ...review,
+            createdAt: review.createdAt
+              ? new Date(review.createdAt.replace(" ", "T")).toLocaleDateString()
+              : "알 수 없음",
+          }));
 
-        // 리뷰 데이터를 역순으로 정렬
-        formattedReviews.sort((a, b) => b.reNo - a.reNo);
-
-        setReviews(formattedReviews);
+          formattedReviews.sort((a, b) => b.reNo - a.reNo); // 최신순 정렬
+          setReviews(formattedReviews);
+        } else {
+          setError("리뷰 데이터를 불러오지 못했습니다.");
+        }
       } catch (error) {
         console.error("리뷰 데이터를 불러오는 중 오류 발생:", error);
         setError("리뷰 데이터를 가져오는 중 문제가 발생했습니다.");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchReviews();
-  }, [isLogged, navigate]);
+  }, [isLogged, navigate, host]);
 
   useEffect(() => {
     setFilteredReviews(reviews);
@@ -115,9 +119,7 @@ const MyPageReview = () => {
                   {(page - 1) * itemsPerPage + index + 1}
                 </td>
                 <td className="item-col-2">{review.content}</td>
-                <td className="item-col-3">
-                  {new Date(review.createdAt).toLocaleDateString()}
-                </td>
+                <td className="item-col-3">{review.createdAt}</td>
               </tr>
             ))
           ) : (
