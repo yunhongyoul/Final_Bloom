@@ -30,6 +30,10 @@
   border-bottom: 1.5px solid #333;
 }
 
+.child {
+  float: right;
+}
+
 /* 리뷰 작성 버튼 */
 .review-btn {
   padding: 10px 20px;

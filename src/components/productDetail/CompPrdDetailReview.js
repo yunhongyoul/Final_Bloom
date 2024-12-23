@@ -191,10 +191,10 @@ const CompPrdDetailReview = () => {
   // 리뷰가 없을 때 메시지 표시
   if (reviews.length === 0) {
     return <div>
-      <div>
-      <p> 리뷰가 없습니다. 첫 번째 리뷰를 작성해보세요! </p>
-      </div>
-      <div>
+      {/* <div className="child"> */}
+      <p className="child"> 리뷰가 없습니다. 첫 번째 리뷰를 작성해보세요! </p>
+      {/* </div> */}
+      {/* <div className="child"> */}
     <button
         onClick={() => setIsReviewing((prev) => !prev)}
         className="review-reg-btn2"
@@ -215,7 +215,7 @@ const CompPrdDetailReview = () => {
           </div>
         </div>
       )}
-      </div>
+      {/* </div> */}
     </div>;
   }
 
