@@ -100,7 +100,7 @@ const MyPageForm = () => {
       <div className="line-block">
         <div className="full-line">
           <Link to="/login">
-            <div className="mypage-text-box">로그인 하러 가기</div>
+            <div className="mypage-text-box">로그인</div>
           </Link>
         </div>
       </div>

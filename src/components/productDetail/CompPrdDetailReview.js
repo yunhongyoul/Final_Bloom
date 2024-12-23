@@ -125,7 +125,7 @@ const CompPrdDetailReview = () => {
         return;
       }
 
-      const response = await axios.delete(`${host}/review/remove?no=${reNo}`, {
+      const response = await axios.delete(`${host}/review/remove${reNo}`, {
         headers: {
           Authorization: token,
           "Content-Type": "application/json",
