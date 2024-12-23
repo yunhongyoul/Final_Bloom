@@ -30,35 +30,6 @@ const CompRegister = () => {
     }
   };
 
-  const idCheck = async () => {
-    if (!member.id || member.id.trim() === "") {
-      alert("아이디를 입력해주세요.");
-      return;
-    }
-  
-    try {
-      const response = await axios.post(
-        `${host}/check-id`,
-        { id: member.id },
-        {
-          headers: {
-            Authorization: authToken, // Redux에서 가져온 토큰 사용
-          },
-        }
-      );
-  
-      if (response.data?.available) {
-        alert("사용 가능한 아이디입니다.");
-      } else if (response.data?.available === false) {
-        alert("사용 중인 아이디입니다.");
-      } else {
-        alert("서버 응답을 확인할 수 없습니다.");
-      }
-    } catch (error) {
-      console.error("아이디 중복 확인 에러:", error);
-      alert("아이디 중복 확인 중 오류가 발생했습니다.");
-    }
-  };
 
   const DomainChange = (e) => {
     const { value } = e.target;
@@ -126,9 +97,6 @@ const CompRegister = () => {
               onChange={handleChange}
               required
             />
-            <button type="button" className="check-btn" onClick={idCheck}>
-              중복확인
-            </button>
           </div>
         </div>
 
