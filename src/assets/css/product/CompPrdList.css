@@ -129,7 +129,13 @@ input[type="checkbox"]:checked::before {
   min-height: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+}
+
+.prd-card .prd-comment {
+  font-size: 13px;
+  padding: 10px;
+  height: 100px;
 }
 
 .prd-iist-box:hover {
@@ -176,15 +182,16 @@ input[type="checkbox"]:checked::before {
   font-weight: bold;
 }
 
+.prd-img-container {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+}
+
 .prd-img {
-  width: 150px;
-  height: 150px;
-}
-
-.prd-thumnail-img {
-  height: 300px;
-}
-
-.prd-detail-img {
-  height: 300px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  margin-bottom: 10px;
 }
