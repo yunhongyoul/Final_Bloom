@@ -1,39 +1,42 @@
-import React, { useEffect, useState, useContext } from "react";
-import CompPrd from "../productCommon/CompPrd";
-import { useSelector } from "react-redux";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
+import CompPrd from '../productCommon/CompPrd';
+import { useSelector } from 'react-redux';
 import { Context } from "../../index";
+import axios from 'axios';
+import '../../assets/css/product/CompPrdList.css'
 
 const CompSearchResult = () => {
-  const [prdList, setPrdList] = useState([]);
-  const authToken = useSelector((state) => state.member.authToken);
+
+  const location = useLocation();
+  const [ prdList, setPrdList ] = useState([]);
   const { host } = useContext(Context);
+  const authToken = useSelector((state) => state.member.authToken);
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
   let totalPages = 0;
   let currentProducts;
 
-  // URL 파라미터 가져오기
-  const { keyword } = useParams();
+  const urlParams = new URLSearchParams(location.search);
+  const keyword = urlParams.get("search");
 
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const response = await axios.get(`${host}/product/list`, {
-          headers: {
-            Authorization: authToken,
-          },
-        });
-        if (keyword !== null) {
-          let filteredPrdList = response.data.filter((prd) => {
-            if (prd.pdName.includes(keyword)) {
-              return true;
-            }
+        const response = await axios.get(
+          `${host}/product/list`,
+          {
+            headers: {
+              Authorization: authToken,
+            },
           });
-          setPrdList(filteredPrdList);
-          setPage(1);
-        }
+          if (keyword) {
+            const filteredPrdList = response.data.filter((prd) =>
+              prd.pdName.includes(keyword)
+            );
+            setPrdList(filteredPrdList);
+            setPage(1);
+          }
       } catch (error) {
         console.error("상품 데이터를 불러오는 중 오류 발생:", error);
       }
@@ -53,16 +56,20 @@ const CompSearchResult = () => {
     }
   };
 
+  
   return (
-    <main className="prd-main">
-      {currentProducts.map((prd) => (
-        <CompPrd key={prd.pdNo} {...prd} />
-      ))}
+    <main>
+      <div className="prd-list-wrap">
+        {currentProducts.map((prd) => (
+          <CompPrd key={prd.pdNo} {...prd} />
+        ))}
+      </div>
 
       <div className="pagination">
         <button
           onClick={() => handlePageChange(page - 1)}
           disabled={page === 1}
+          className="page-before"
         >
           이전
         </button>
@@ -78,6 +85,7 @@ const CompSearchResult = () => {
         <button
           onClick={() => handlePageChange(page + 1)}
           disabled={page === totalPages}
+          className="page-after"
         >
           다음
         </button>
