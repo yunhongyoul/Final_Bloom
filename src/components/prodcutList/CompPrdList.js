@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Context } from '../../index';
 import axios from "axios";
 import CompPrd from "../productCommon/CompPrd";
 import "../../assets/css/product/CompPrdList.css";
+import CompSearchResult from "../searchResult/CompSearchResult.js";
 
 const CompPrdList = () => {
   const location = useLocation();
@@ -19,6 +20,7 @@ const CompPrdList = () => {
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
   const [selectedDepth1, setSelectedDepth1] = useState("");
+  const [keyword, setKeyword] = useState(null); // 키워드 상태 추가
 
   // 전체 상품 데이터 가져오기
   useEffect(() => {
@@ -26,7 +28,6 @@ const CompPrdList = () => {
       try {
         const response = await axios.get(`${host}/product/list`);
         const products = response.data;
-        products.sort((a, b) => b.pdNo - a.pdNo);
         setPrdList(products);
 
         const uniqueDepth1 = [...new Set(products.map((prd) => prd.depth1))];
@@ -51,6 +52,13 @@ const CompPrdList = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const depth1Param = urlParams.get("depth1");
+    const searchParam = urlParams.get("search"); // 검색 키워드 가져오기
+
+    if (searchParam) {
+      setKeyword(searchParam);
+    } else {
+      setKeyword(null);
+    }
 
     if (!depth1Param) {
       setSelectedDepth1(""); // 선택된 depth1 초기화
@@ -63,7 +71,7 @@ const CompPrdList = () => {
       );
       setPage(1); // 페이지 초기화
     }
-  }, [location.search]);
+  }, [location.search, prdList]);
 
   useEffect(() => {
     let filtered = prdList;
@@ -124,6 +132,11 @@ const CompPrdList = () => {
     setPage(1); // 페이지 초기화
   };
 
+    // 검색 결과와 기본 리스트의 데이터 및 페이지네이션 처리
+    const displayList = keyword
+    ? filteredPrdList.filter((prd) => prd.pdName.includes(keyword))
+    : filteredPrdList;
+
   const totalPages = Math.ceil(filteredPrdList.length / itemsPerPage);
   const currentProducts = filteredPrdList.slice(
     (page - 1) * itemsPerPage,
@@ -137,12 +150,13 @@ const CompPrdList = () => {
   };
 
   useEffect(() => {
-    setPage(1);
-  }, [selectedDepth1, selectedDepth2]);
+    if (!keyword) {
+      setFilteredPrdList(prdList); // 키워드가 없으면 전체 리스트를 보여줍니다.
+    }
+  }, [keyword, prdList]);
 
-  
+
   return (
-
     <div className="prd-container">
       <div className="prd-wrap">
         {/* 검색 필터 */}
@@ -184,46 +198,59 @@ const CompPrdList = () => {
         
         <main className="prd-main">
           {isLogged && role === "ROLE_ADMIN" && (
-          <button
-            className="register-btn"
-            onClick={() => navigate("/product/register")}
-          >
-            상품 등록
-          </button>
+            <button
+              className="register-btn"
+              onClick={() => navigate("/product/register")}
+            >
+              상품 등록
+            </button>
           )}
-          {/* 상품 리스트 */}
-          <div className="prd-list-wrap">
-            {currentProducts.map((prd) => (
-              <CompPrd key={prd.pdNo} {...prd} />
-            ))}
-          </div>
+
+          {/* 상품 리스트 또는 검색 결과 */}
+          {keyword ? (
+            <CompSearchResult
+              currentProducts={filteredPrdList.slice((page - 1) * itemsPerPage, page * itemsPerPage)}
+              totalPages={Math.ceil(filteredPrdList.length / itemsPerPage)}
+              page={page}
+              handlePageChange={handlePageChange}
+            />
+
+          ) : (
+            <div className="prd-list-wrap">
+              {currentProducts.map((prd) => (
+                <CompPrd key={prd.pdNo} {...prd} />
+              ))}
+            </div>
+          )}
 
           {/* 페이지네이션 */}
-          <div className="pagination">
-            <button
-              onClick={() => handlePageChange(page - 1)}
-              disabled={page === 1}
-              className="page-before"
-            >
-            이전
-            </button>
-            {Array.from({ length: totalPages }, (_, i) => (
+          {!keyword && (
+            <div className="pagination">
               <button
-                key={i}
-                className={page === i + 1 ? "active" : ""}
-                onClick={() => handlePageChange(i + 1)}
+                onClick={() => handlePageChange(page - 1)}
+                disabled={page === 1}
+                className="page-before"
               >
-                {i + 1}
+                이전
               </button>
-            ))}
-            <button
-              onClick={() => handlePageChange(page + 1)}
-              disabled={page === totalPages}
-              className="page-after"
-            >
-              다음
-            </button>
-          </div>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  className={page === i + 1 ? "active" : ""}
+                  onClick={() => handlePageChange(i + 1)}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => handlePageChange(page + 1)}
+                disabled={page === totalPages}
+                className="page-after"
+              >
+                다음
+              </button>
+            </div>
+          )}
         </main>
 
       </div>
