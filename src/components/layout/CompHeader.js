@@ -15,8 +15,10 @@ const CompHeader = () => {
 
   const fnSubmitHandler = (e) => {
     e.preventDefault();
-    const keyword = document.querySelector(".searchInput").value;
-    navigate(`/search-result/${keyword}`);
+    const keyword = document.querySelector(".searchInput").value.trim();
+    if (keyword) {
+      navigate(`/product/list?search=${encodeURIComponent(keyword)}`);
+    }
   };
 
   useEffect(() => {
