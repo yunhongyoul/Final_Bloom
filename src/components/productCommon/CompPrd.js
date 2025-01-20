@@ -54,7 +54,9 @@ const CompPrd = ({ pdNo, pdName, price, thumnail, comment }) => {
   return (
     <div className="prd-iist-box">
       <div className="prd-card" onClick={handleCardClick}>
+      <div className="prd-img-container">
         <img src={`${thumnail}`} alt={pdName} className="prd-img" />
+        </div>
         <h4>{pdName}</h4>
         <p>{price.toLocaleString()} 원</p>
         <p>{comment}</p>

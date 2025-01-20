@@ -100,22 +100,7 @@ const CompPrdDetail = () => {
     if (!window.confirm("정말로 삭제하시겠습니까?")) return;
 
     try {
-      const token = localStorage.getItem("token"); // 토큰 가져오기
-      if (!token) {
-        alert("로그인이 필요합니다.");
-        return;
-      }
-
-      // DELETE 요청 (Query Parameter 사용)
-      await axios.delete(`${host}/product/remove`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          no: pdNo, // Query Parameter에 상품 번호 전달
-        },
-      });
-
+      await axios.delete(`${host}/product/delete/${pdNo}`);
       alert("상품이 삭제되었습니다.");
       navigate("/product/list"); // 상품 목록 페이지로 이동
     } catch (error) {
